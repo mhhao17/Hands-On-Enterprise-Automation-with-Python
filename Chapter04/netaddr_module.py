@@ -9,7 +9,7 @@ def check_ip_address(ipaddr):
     ip_attributes = []
     ipaddress = IPAddress(ipaddr)
 
-    if ipaddress.is_private():
+    if ipaddress.is_ipv4_private_use():
         ip_attributes.append("IP Address is Private")
 
     else:
@@ -49,8 +49,8 @@ def operate_on_ip_network(ipnet):
     return "\n".join(net_attributes)
 
 
-ipaddr = raw_input("Please Enter the IP Address: ")
-print check_ip_address(ipaddr)
+ipaddr = input("Please Enter the IP Address: ")
+print(check_ip_address(ipaddr))
 
-ipnet = raw_input("Please Enter the IP Network: ")
-print operate_on_ip_network(ipnet)
+ipnet = input("Please Enter the IP Network: ")
+print(operate_on_ip_network(ipnet))
