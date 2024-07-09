@@ -3,7 +3,7 @@ __author__ = "Bassim Aly"
 __EMAIL__ = "basim.alyy@gmail.com"
 
 from netmiko import SSHDetect, Netmiko
-
+# add common
 device = {
     'device_type': 'autodetect',
     'host': '10.10.88.110',
