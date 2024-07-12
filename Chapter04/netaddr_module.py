@@ -1,6 +1,5 @@
 #!/usr/bin/python
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
+
 
 from netaddr import IPNetwork, IPAddress
 
