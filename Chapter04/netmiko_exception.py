@@ -1,33 +1,31 @@
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
 
 from netmiko import ConnectHandler
-from netmiko.ssh_exception import AuthenticationException, NetMikoTimeoutException
+from netmiko import NetMikoAuthenticationException, NetMikoTimeoutException
 
 device = {
     'device_type': 'cisco_ios',
-    'ip': '10.10.88.112',
+    'ip': '192.168.10.20',
     'username': 'admin',
-    'password': 'access123',
-    'secret': 'access123',
+    'password': 'Cisc0123',
+    'secret': 'Cisc0123',
 }
 
-print "########## Connecting to Device {0} ############".format(device['ip'])
+print("########## Connecting to Device {0} ############".format(device['ip']))
 try:
     net_connect = ConnectHandler(**device)
     net_connect.enable()
 
-    print "***** show ip configuration of Device *****"
+    print("***** show ip configuration of Device *****")
     output = net_connect.send_command("show ip int b")
-    print output
+    print(output)
 
     net_connect.disconnect()
 
 except NetMikoTimeoutException:
-    print "================ SOMETHING WRONG HAPPEN WITH {0} ==================".format(device['ip'])
+    print("================ SOMETHING WRONG HAPPEN WITH {0} ==================".format(device['ip']))
 
 except AuthenticationException:
-    print "================ Authentication Failed with {0} ====================".format(device['ip'])
+    print("================ Authentication Failed with {0} ====================".format(device['ip']))
 
 except Exception as unknown_error:
-    print "================ SOMETHING UNKNOWN HAPPEN WITH {0} ================"
+    print("================ SOMETHING UNKNOWN HAPPEN WITH {0} ================")
