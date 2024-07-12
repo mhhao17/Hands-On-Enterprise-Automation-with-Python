@@ -1,14 +1,13 @@
 #!/usr/local/bin/python
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
+
 
 from netmiko import SSHDetect, Netmiko
 
 device = {
     'device_type': 'autodetect',
-    'host': '10.10.88.110',
+    'host': '192.168.10.20',
     'username': 'admin',
-    'password': "access123",
+    'password': "Cisc0123",
 }
 
 detect_device = SSHDetect(**device)
