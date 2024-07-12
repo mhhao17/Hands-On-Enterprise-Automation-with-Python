@@ -1,50 +1,60 @@
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
 
 from netmiko import ConnectHandler
-from netmiko.ssh_exception import AuthenticationException, NetMikoTimeoutException
-import xlrd
+from netmiko import NetMikoAuthenticationException, NetMikoTimeoutException
 from pprint import pprint
+import openpyxl
 
-workbook = xlrd.open_workbook(
-    r"/media/bassim/DATA/GoogleDrive/Packt/EnterpriseAutomationProject/Chapter4_Using_Python_to_manage_network_devices/UC3_devices.xlsx")
+def load_devices_from_excel(file_path):
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook.active
+    devices = {}
+    
+    for index, row in enumerate(sheet.iter_rows(values_only=True), start=1):
+        if index == 1:
+            continue
+        
+        hostname = row[0]
+        ipaddr = row[1]
+        username = row[2]
+        password = row[3]
+        enable_password = row[4]
+        vendor = row[5]
 
-sheet = workbook.sheet_by_index(0)
+        devices[hostname] = {
+            'device_type': vendor,
+            'ip': ipaddr,
+            'username': username,
+            'password': password,
+            'secret': enable_password
+        }
+    
+    return devices
 
-for index in range(1, sheet.nrows):
-    hostname = sheet.row(index)[0].value
-    ipaddr = sheet.row(index)[1].value
-    username = sheet.row(index)[2].value
-    password = sheet.row(index)[3].value
-    enable_password = sheet.row(index)[4].value
-    vendor = sheet.row(index)[5].value
-
-    device = {
-        'device_type': vendor,
-        'ip': ipaddr,
-        'username': username,
-        'password': password,
-        'secret': enable_password,
-
-    }
-    # pprint(device)
-
-    print "########## Connecting to Device {0} ############".format(device['ip'])
+def connect_and_run_command(device):
+    print(f"########## Connecting to Device {device['ip']} ############")
     try:
         net_connect = ConnectHandler(**device)
         net_connect.enable()
 
-        print "***** show ip configuration of Device *****"
-        output = net_connect.send_command("show ip int b")
-        print output
+        print("***** show ip configuration of Device *****")
+        output = net_connect.send_command("show ip int brief")
+        print(output)
 
         net_connect.disconnect()
 
     except NetMikoTimeoutException:
-        print "=======SOMETHING WRONG HAPPEN WITH {0}=======".format(device['ip'])
+        print(f"======= TIMEOUT OCCURRED WITH {device['ip']} =======")
 
-    except AuthenticationException:
-        print "=======Authentication Failed with {0}=======".format(device['ip'])
+    except NetMikoAuthenticationException:
+        print(f"======= AUTHENTICATION FAILED WITH {device['ip']} =======")
 
     except Exception as unknown_error:
-        print "=======SOMETHING UNKNOWN HAPPEN WITH {0}======="
+        print(f"======= UNKNOWN ERROR OCCURRED WITH {device['ip']} =======")
+        print(unknown_error)
+
+if __name__ == "__main__":
+    devices = load_devices_from_excel(r"./UC3_devices.xlsx")
+    pprint(devices)
+    
+    for hostname, device in devices.items():
+        connect_and_run_command(device)
