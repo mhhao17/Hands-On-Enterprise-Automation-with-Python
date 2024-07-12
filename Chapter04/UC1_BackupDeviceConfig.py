@@ -1,13 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
+# ******* 功能說明 ********
+# 此代碼對應到 book Page 68
+#
+#
 
 from netmiko import ConnectHandler
 from datetime import datetime
 
 with open(
-        "/media/bassim/DATA/GoogleDrive/Packt/EnterpriseAutomationProject/Chapter5_Using_Python_to_manage_network_devices/UC1_devices.txt") as devices_file:
+        "./UC1_devices.txt") as devices_file:
     devices = devices_file.readlines()
 
 for line in devices:
@@ -25,7 +28,7 @@ for line in devices:
         device_type = "juniper"
         backup_command = "show configuration | display set"
 
-    print str(datetime.now()) + " Connecting to device {}".format(ipaddr)
+    print(str(datetime.now()) + " Connecting to device {}".format(ipaddr))
 
     net_connect = ConnectHandler(device_type=device_type,
                                  ip=ipaddr,
@@ -35,12 +38,12 @@ for line in devices:
     net_connect.enable()
     running_config = net_connect.send_command(backup_command)
 
-    print str(datetime.now()) + " Saving config from device {}".format(ipaddr)
+    print(str(datetime.now()) + " Saving config from device {}".format(ipaddr))
 
     f = open("dev_" + ipaddr + "_.cfg", "w")
     f.write(running_config)
     f.close()
-    print "=============================================="
+    print("==============================================")
 
 # Result should be
 # dev_10.10.88.110_.cfg
