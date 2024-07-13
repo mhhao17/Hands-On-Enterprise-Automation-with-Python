@@ -1,5 +1,6 @@
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import telnetlib
 
@@ -19,7 +20,7 @@ cnx.read_until("#")
 cnx.write("show ip int b" + "\n")
 output = cnx.read_until("#")
 cleaned_output = output.replace("show ip int b", "").replace("R1#", "")
-print cleaned_output
+print(cleaned_output)
 
 exit()
 
@@ -45,7 +46,7 @@ cnx.read_until("#")
 cnx.write("show ip int b" + "\n")
 time.sleep(5)
 output = cnx.read_until("#")
-print output
+print(output)
 
 # Hide the password
 
@@ -70,7 +71,7 @@ cnx.read_until("#")
 cnx.write("show ip int b" + "\n")
 time.sleep(5)
 output = cnx.read_until("#")
-print output
+print(output)
 
 hosts = ["10.10.88.110", "10.10.88.111"]
 username = raw_input("Please Enter your username:")
@@ -92,8 +93,8 @@ for ip_address in hosts:
     # cnx.read_until("#")
     output = cnx.read_until("#")  # You need to print the variable
 
-    print "\n#################### EXECUTING COMMAND ON {0} ###############################".format(ip_address)
+    print("\n#################### EXECUTING COMMAND ON {0} ###############################".format(ip_address))
 
-    print output.replace("show ip int b", "")
+    print(output.replace("show ip int b", ""))
 
     cnx.close()
