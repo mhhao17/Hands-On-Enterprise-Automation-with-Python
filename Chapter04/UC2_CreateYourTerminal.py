@@ -34,5 +34,5 @@ while True:
     for cmd in commands:
         connection.write(cmd + "\n")
         output = connection.read_until("#")
-        print output
-        print "==================="
+        print(output)
+        print("===================")

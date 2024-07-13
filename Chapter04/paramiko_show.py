@@ -16,7 +16,6 @@ shell.send("terminal length 0\n")
 shell.send("show ip int b\n")
 shell.send("show arp \n")
 time.sleep(2)
-print shell.recv(
-    5000)  # This will receive everything from the buffer, if you need to receive specifc output, the you should execute the command
-# and immediately receive the output before executing the 2nd command, Also you should sleep a little
+print(shell.recv(5000)) # This will receive everything from the buffer, if you need to receive specifc output, the you should execute the command
+                        # and immediately receive the output before executing the 2nd command, Also you should sleep a little
 Channel.close()
