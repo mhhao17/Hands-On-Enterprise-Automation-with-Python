@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from netmiko import ConnectHandler
 from netmiko import NetMikoAuthenticationException, NetMikoTimeoutException

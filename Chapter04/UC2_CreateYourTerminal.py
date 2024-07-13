@@ -1,6 +1,5 @@
-#!/usr/bin/python
-__author__ = "Bassim Aly"
-__EMAIL__ = "basim.alyy@gmail.com"
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import telnetlib
 
